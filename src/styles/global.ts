@@ -1,4 +1,4 @@
-import { createGlobalStyle } from 'styled-components'
+import { createGlobalStyle } from 'styled-components';
 
 export const GlobalStyle = createGlobalStyle`
   * {
@@ -18,11 +18,11 @@ export const GlobalStyle = createGlobalStyle`
     -webkit-font-smoothing: antialiased;
   }
 
-  body, input, button, textarea {
+  body, input, button, textarea, p {
     font-family: 'Roboto', sans-serif;
     font-weight: 400;
     font-size: 1rem;
     line-height: 130%;
   }
 
-`
+`;

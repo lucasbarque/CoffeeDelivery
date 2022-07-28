@@ -4,7 +4,10 @@ import {
   CurrencyDollar,
   MapPinLine,
   Money,
+  Trash,
 } from 'phosphor-react';
+import Button from '../../components/Button';
+import Selector from '../../components/Selector';
 import {
   Container,
   Order,
@@ -18,7 +21,13 @@ import {
   Form,
   Input,
   Buttons,
-  Button,
+  PaymentForm,
+  Infos,
+  Price,
+  Resume,
+  Total,
+  Actions,
+  ContainerButton
 } from './styles';
 
 export function Checkout() {
@@ -73,18 +82,18 @@ export function Checkout() {
             </div>
           </Label>
           <Buttons>
-            <Button>
+            <PaymentForm>
               <CreditCard weight='regular' size={16} />
               <span>Cartão de Crédito</span>
-            </Button>
-            <Button>
+            </PaymentForm>
+            <PaymentForm>
               <Bank weight='regular' size={16} />
               <span>Cartão de Débito</span>
-            </Button>
-            <Button>
+            </PaymentForm>
+            <PaymentForm>
               <Money weight='regular' size={16} />
               <span>Dinheiro</span>
-            </Button>
+            </PaymentForm>
           </Buttons>
         </Address>
         <Payment></Payment>
@@ -94,19 +103,37 @@ export function Checkout() {
         <Title>Cafés selecionados</Title>
         <Items>
           <Item>
-            <img src="/src/assets/expresso.svg" width={64} />
-            {/* <Infos>
-              <span>Expresso Tradicional</span>
-              <Actions>
-                <Selector>
-                  <Minus weight="bold" />
-                  <span>1</span>
-                  <Plus weight="bold" />
-                </Selector>
-                <Button></Button>
-              </Actions>
-            </Infos> */}
+            <Infos>
+              <img src="/src/assets/expresso.svg" width={64} />
+              <div>
+                <span>Expresso Tradicional</span>
+                {<Actions>
+                  <Selector />
+                  <Button kind="textIcon" icon={<Trash />}>Remover</Button>
+                </Actions>}
+              </div>
+
+            </Infos>
+            <Price>
+              R$ 9,90
+            </Price>
           </Item>
+
+          <Resume>
+            <span>Total de Itens</span>
+            <span>R$ 29,70</span>
+          </Resume>
+          <Resume>
+            <span>Entrega</span>
+            <span>R$ 3,50</span>
+          </Resume>
+          <Total>
+            <span>Total</span>
+            <span>R$ 33,20</span>
+          </Total>
+          <ContainerButton>
+            <Button kind='text'>Confirmar pedido</Button>
+          </ContainerButton>
         </Items>
       </Cart>
     </Container>

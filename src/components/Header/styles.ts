@@ -28,39 +28,3 @@ export const Location = styled.div`
   border-radius: 6px;
   padding: 0 8px;
 `;
-
-export const Cart = styled.button`
-  background: ${(props) => props.theme['yellow-light']};
-  border-radius: 6px;
-  border: 0;
-  width: 38px;
-  height: 38px;
-
-  position: relative;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  svg {
-    color: ${(props) => props.theme['yellow-dark']};
-  }
-
-  span {
-    position: absolute;
-    top: -8px;
-    right: -8px;
-    background-color: ${(props) => props.theme['yellow-dark']};
-    color: ${(props) => props.theme['white']};
-    width: 20px;
-    height: 20px;
-    border-radius: 50%;
-
-    font-size: 0.75rem;
-    font-weight: bold;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-`;

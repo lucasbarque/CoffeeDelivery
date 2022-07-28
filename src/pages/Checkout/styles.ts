@@ -13,13 +13,12 @@ export const Address = styled.div`
   padding: 2.5rem;
   border-radius: 6px;
   margin-top: 1rem;
-  max-width: 640px;
 `;
 export const Payment = styled.div`
   background-color: ${(props) => props.theme['base-card']};
 `;
 export const Cart = styled.div`
-  flex: 1;
+  width: 450px;
 `;
 
 const LABEL_ICON_COLOR = {
@@ -69,7 +68,14 @@ export const Items = styled.div`
   border-radius: 6px 44px;
   padding: 2.5rem;
 `;
-export const Item = styled.div``;
+
+export const ContainerButton = styled.div`
+  margin-top: 1.5rem;
+
+  button {
+    width: 100%;
+  }
+`;
 
 export const Form = styled.form`
   display: grid;
@@ -98,7 +104,7 @@ export const Buttons = styled.div`
   gap: 0.75rem;
   margin-top: 2rem;
 `;
-export const Button = styled.button`
+export const PaymentForm = styled.button`
   width: 100%;
   border: 0;
   border-radius: 6px;
@@ -116,5 +122,53 @@ export const Button = styled.button`
 
   svg {
     color: ${(props) => props.theme['purple']};
+  }
+`;
+
+export const Item = styled.div`
+  display: flex;
+  justify-content: space-between;
+
+  padding-bottom: 1.5rem;
+  margin-bottom: 1.5rem;
+  border-bottom: 1px solid ${(props) => props.theme['base-button']};
+`;
+
+export const Infos = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+
+  span {
+    color: ${(props) => props.theme['base-subtitle']};
+  }
+`;
+export const Price = styled.div`
+  color: ${(props) => props.theme['base-text']};
+  font-weight: 700;
+`;
+export const Resume = styled.div`
+  color: ${(props) => props.theme['base-text']};
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 12px;
+`;
+export const Total = styled.div`
+  color: ${(props) => props.theme['base-subtitle']};
+  font-weight: 700;
+  font-size: 1.25rem;
+
+  display: flex;
+  justify-content: space-between;
+`;
+
+export const Actions = styled.div`
+  display: flex;
+  gap: 0.5rem;
+
+  margin-top: 0.5rem;
+
+  > div {
+    height: 2rem;
   }
 `;

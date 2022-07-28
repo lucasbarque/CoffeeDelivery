@@ -1,6 +1,8 @@
-import { Minus, Plus, ShoppingCartSimple } from "phosphor-react";
+import { ShoppingCartSimple } from "phosphor-react";
+import Button from "../Button";
+import Selector from "../Selector";
 
-import { Container, CoffeeTypeList, CoffeeType, Title, Description, Bottom, Price, Selector, Cart, Actions } from './styles';
+import { Container, CoffeeTypeList, CoffeeType, Title, Description, Bottom, Price, Actions } from './styles';
 
 export default function CoffeeItem() {
   return (
@@ -21,14 +23,8 @@ export default function CoffeeItem() {
         </Price>
 
         <Actions>
-          <Selector>
-            <Minus weight="bold" />
-            <span>6</span>
-            <Plus weight="bold" />
-          </Selector>
-          <Cart>
-            <ShoppingCartSimple weight="fill" size={22} />
-          </Cart>
+          <Selector />
+          <Button kind="cart" icon={<ShoppingCartSimple weight="fill" />} />
         </Actions>
       </Bottom>
 

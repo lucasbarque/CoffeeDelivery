@@ -4,22 +4,31 @@ import Selector from "../Selector";
 
 import { Container, CoffeeTypeList, CoffeeType, Title, Description, Bottom, Price, Actions } from './styles';
 
-export default function CoffeeItem() {
+import { CoffeeProps } from '../CoffeeList'
+
+interface CoffeeItemProps {
+  coffee: CoffeeProps;
+}
+
+export default function CoffeeItem({ coffee }: CoffeeItemProps) {
   return (
     <Container>
-      <img src="/src/assets/expresso.svg" alt="Café Expresso" />
+      <img src={`/src/assets/${coffee.image}`} alt="Café Expresso" />
 
       <CoffeeTypeList>
-        <CoffeeType>Tradicional</CoffeeType>
-        <CoffeeType>Com leite</CoffeeType>
+        {coffee.types && coffee.types.map(type => <CoffeeType>{type}</CoffeeType>)}
       </CoffeeTypeList>
 
-      <Title>Expresso Tradicional</Title>
-      <Description>O tradicional café feito com água quente e grãos moídos</Description>
+      <Title>{coffee.title}</Title>
+      <Description>{coffee.description}</Description>
 
       <Bottom>
         <Price>
-          <small>R$</small> 9,90
+          <small>R$</small> {new Intl.NumberFormat('pt-BR', {
+            style: 'decimal',
+            currency: 'BRL',
+            minimumFractionDigits: 2,
+          }).format(coffee.price)}
         </Price>
 
         <Actions>

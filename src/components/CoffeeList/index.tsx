@@ -1,37 +1,17 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import { CoffeeContext } from "../../contexts/CoffeeContext";
 import CoffeeItem from "../CoffeeItem";
 import { Container, CoffeeListItems } from "./styles";
 
-export interface CoffeeProps {
-  id: number;
-  title: string;
-  types?: (string)[] | null;
-  description: string;
-  price: number;
-  image: string;
-}
-
-
 export default function CoffeeList() {
-  const [coffees, setCoffees] = useState<CoffeeProps[]>([]);
-
-
-  useEffect(() => {
-
-    async function getCoffees() {
-      const response = await fetch("http://localhost:3000/coffes").then(res => res.json());
-      setCoffees(response);
-    }
-
-    getCoffees();
-  }, [])
+  const { coffees } = useContext(CoffeeContext);
 
   return (
     <Container>
       <h2>Nossos cafés</h2>
 
       <CoffeeListItems>
-        {coffees.map(coffee =>
+        {coffees && coffees.map(coffee =>
           <CoffeeItem
             key={coffee.id}
             coffee={coffee}

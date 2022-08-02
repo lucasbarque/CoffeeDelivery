@@ -1,20 +1,18 @@
 import { Minus, Plus } from 'phosphor-react'
-import { useContext } from 'react'
-import { CoffeeContext } from '../../contexts/CoffeeContext'
 import { Container } from './styles'
 
 interface SelectorProps {
-  id: number;
+  onIncrease: () => void;
+  onDecrease: () => void;
+  quantity: number;
 }
 
-export default function Selector({ id }: SelectorProps) {
-  const { addToCart, removeFromCart } = useContext(CoffeeContext)
-
+export default function Selector({ onIncrease, onDecrease, quantity }: SelectorProps) {
   return (
     <Container>
-      <Minus weight="bold" onClick={() => console.log('oi')} />
-      <span>6</span>
-      <Plus weight="bold" onClick={() => removeFromCart(id)} />
+      <Minus weight="bold" onClick={onDecrease} />
+      <span>{quantity}</span>
+      <Plus weight="bold" onClick={onIncrease} />
     </Container>
   )
 }

@@ -1,17 +1,43 @@
 import { ShoppingCartSimple } from "phosphor-react";
+import { useState } from "react";
+import { useCart } from "../../hooks/useCart";
 import Button from "../Button";
 import Selector from "../Selector";
 
 import { Container, CoffeeTypeList, CoffeeType, Title, Description, Bottom, Price, Actions } from './styles';
 
-import { useContext } from "react";
-import { Coffee, CoffeeContext } from "../../contexts/CoffeeContext";
-
-interface CoffeeItemProps {
-  coffee: Coffee;
+export interface Coffee {
+  id: number;
+  title: string;
+  types?: (string)[] | null;
+  description: string;
+  price: number;
+  image: string;
 }
 
-export default function CoffeeItem({ coffee }: CoffeeItemProps) {
+export default function CoffeeItem(coffee: Coffee) {
+  const [quantity, setQuantity] = useState(0);
+
+  function handleIncrease() {
+    setQuantity((state) => state + 1);
+  }
+
+  function handleDecrease() {
+    if (quantity >= 1) {
+      setQuantity((state) => state - 1);
+    }
+  }
+
+  const { addCoffeeToCart } = useCart();
+
+  function handleAddToCart() {
+    const coffeeToAdd = {
+      ...coffee,
+      quantity
+    };
+    addCoffeeToCart(coffeeToAdd);
+  }
+
   return (
     <Container>
       <img src={`/src/assets/${coffee.image}`} alt="Café Expresso" />
@@ -33,8 +59,8 @@ export default function CoffeeItem({ coffee }: CoffeeItemProps) {
         </Price>
 
         <Actions>
-          <Selector id={coffee.id} />
-          <Button kind="cart" icon={<ShoppingCartSimple weight="fill" />} />
+          <Selector onDecrease={handleDecrease} onIncrease={handleIncrease} quantity={quantity} />
+          <Button kind="cart" icon={<ShoppingCartSimple weight="fill" onClick={handleAddToCart} />} />
         </Actions>
       </Bottom>
 

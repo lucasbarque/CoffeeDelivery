@@ -1,49 +1,55 @@
-import { ShoppingCartSimple } from "phosphor-react";
-import { useState } from "react";
-import { useCart } from "../../hooks/useCart";
-import Button from "../Button";
-import Selector from "../Selector";
+import { ShoppingCartSimple } from 'phosphor-react';
+import { useState } from 'react';
+import { useCart } from '../../hooks/useCart';
+import Button from '../Button';
+import Selector from '../Selector';
 
-import { Container, CoffeeTypeList, CoffeeType, Title, Description, Bottom, Price, Actions } from './styles';
+import {
+  Container,
+  CoffeeTypeList,
+  CoffeeType,
+  Title,
+  Description,
+  Bottom,
+  Price,
+  Actions,
+} from './styles';
 
-export interface Coffee {
+interface Coffee {
   id: number;
   title: string;
-  types?: (string)[] | null;
+  types?: string[] | null;
   description: string;
   price: number;
   image: string;
 }
 
-export default function CoffeeItem(coffee: Coffee) {
-  const [quantity, setQuantity] = useState(0);
+interface CoffeeItemProps {
+  coffee: Coffee;
+  quantity: number;
+}
 
-  function handleIncrease() {
-    setQuantity((state) => state + 1);
+export default function CoffeeItem({ coffee, quantity }: CoffeeItemProps) {
+  const [quantityCoffee, setQuantityCoffee] = useState(quantity);
+
+  function handleAddCoffee() {
+    setQuantityCoffee((state) => state + 1);
   }
 
-  function handleDecrease() {
-    if (quantity >= 1) {
-      setQuantity((state) => state - 1);
+  function handleRemoveCoffee() {
+    if (quantity > 1) {
+      setQuantityCoffee((state) => state - 1);
     }
   }
-
-  const { addCoffeeToCart } = useCart();
-
-  function handleAddToCart() {
-    const coffeeToAdd = {
-      ...coffee,
-      quantity
-    };
-    addCoffeeToCart(coffeeToAdd);
-  }
-
   return (
     <Container>
-      <img src={`/src/assets/${coffee.image}`} alt="Café Expresso" />
+      <img src={`/src/assets/${coffee.image}`} alt='Café Expresso' />
 
       <CoffeeTypeList>
-        {coffee.types && coffee.types.map(type => <CoffeeType key={type}>{type}</CoffeeType>)}
+        {coffee.types &&
+          coffee.types.map((type) => (
+            <CoffeeType key={type}>{type}</CoffeeType>
+          ))}
       </CoffeeTypeList>
 
       <Title>{coffee.title}</Title>
@@ -51,7 +57,8 @@ export default function CoffeeItem(coffee: Coffee) {
 
       <Bottom>
         <Price>
-          <small>R$</small> {new Intl.NumberFormat('pt-BR', {
+          <small>R$</small>{' '}
+          {new Intl.NumberFormat('pt-BR', {
             style: 'decimal',
             currency: 'BRL',
             minimumFractionDigits: 2,
@@ -59,11 +66,16 @@ export default function CoffeeItem(coffee: Coffee) {
         </Price>
 
         <Actions>
-          <Selector onDecrease={handleDecrease} onIncrease={handleIncrease} quantity={quantity} />
-          <Button kind="cart" icon={<ShoppingCartSimple weight="fill" onClick={handleAddToCart} />} />
+          {
+            <Selector
+              quantity={quantityCoffee}
+              onRemoveItem={handleRemoveCoffee}
+              onAddItem={handleAddCoffee}
+            />
+          }
+          <Button kind='cart' icon={<ShoppingCartSimple weight='fill' />} />
         </Actions>
       </Bottom>
-
     </Container>
-  )
+  );
 }

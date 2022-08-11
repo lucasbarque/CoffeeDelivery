@@ -1,45 +1,39 @@
-import { createContext, ReactNode, useState } from 'react';
-import { produce } from 'immer';
-
-import { Coffee } from '../components/CoffeeItem';
-
-
-
-export interface CartItem extends Coffee {
-  quantity: number;
-}
+import { createContext, ReactNode, useEffect, useState } from 'react';
 
 interface CartContextType {
-  cartItems: CartItem[];
-  addCoffeeToCart: (coffee: CartItem) => void;
+  coffees: Coffee[];
 }
 
 interface CartContextProviderProps {
   children: ReactNode;
 }
 
+interface Coffee {
+  id: number;
+  title: string;
+  types?: string[] | null;
+  description: string;
+  price: number;
+  image: string;
+}
+
 export const CartContext = createContext({} as CartContextType);
 
 export function CartContextProvider({ children }: CartContextProviderProps) {
-  const [cartItems, setCartItems] = useState<CartItem[]>([]);
+  const [coffees, setCoffees] = useState<Coffee[]>([]);
 
-  function addCoffeeToCart(coffee: CartItem) {
-    const coffeeAlreadyExists = cartItems.findIndex(cartItem => cartItem.id === coffee.id);
-
-    const newCart = produce(cartItems, (draft) => {
-      if (coffeeAlreadyExists < 0) {
-        draft.push({ ...coffee });
-      } else {
-        draft[coffeeAlreadyExists].quantity += coffee.quantity;
-      }
-    })
-
-    setCartItems(newCart);
+  async function fetchCoffees() {
+    const response = await fetch('http://localhost:3000/coffes').then((res) =>
+      res.json()
+    );
+    setCoffees(response);
   }
 
+  useEffect(() => {
+    fetchCoffees();
+  }, []);
+
   return (
-    <CartContext.Provider value={{ cartItems, addCoffeeToCart }}>
-      {children}
-    </CartContext.Provider>
-  )
+    <CartContext.Provider value={{ coffees }}>{children}</CartContext.Provider>
+  );
 }

@@ -7,7 +7,7 @@
     "dev": "vite",
     "build": "tsc && vite build",
     "preview": "vite preview",
-    "server": "json-server --watch ./src/fakes/server.json"
+    "server": "json-server --watch server.json -d 2000"
   },
   "dependencies": {
     "immer": "^9.0.15",

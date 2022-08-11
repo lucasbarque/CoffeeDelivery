@@ -1,16 +1,13 @@
-import { MapPin, ShoppingCart } from 'phosphor-react'
-import { NavLink } from 'react-router-dom'
-import { useCart } from '../../hooks/useCart'
-import Button from '../Button'
-import Logo from '../Logo'
-import { Buttons, Container, Location } from './styles'
+import { MapPin, ShoppingCart } from 'phosphor-react';
+import { NavLink } from 'react-router-dom';
+import Button from '../Button';
+import Logo from '../Logo';
+import { Buttons, Container, Location } from './styles';
 
 export default function Header() {
-  const { cartItems } = useCart()
-
   return (
     <Container>
-      <NavLink to="/">
+      <NavLink to='/'>
         <Logo />
       </NavLink>
       <Buttons>
@@ -18,10 +15,14 @@ export default function Header() {
           <MapPin weight='fill' size={22} />
           Porto Alegre, RS
         </Location>
-        <NavLink to="/checkout">
-          <Button kind='cart-badge' icon={<ShoppingCart weight='fill' />} labelQuantity={cartItems.length} />
+        <NavLink to='/checkout'>
+          <Button
+            kind='cart-badge'
+            icon={<ShoppingCart weight='fill' />}
+            labelQuantity={0}
+          />
         </NavLink>
       </Buttons>
     </Container>
-  )
+  );
 }

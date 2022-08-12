@@ -41,6 +41,7 @@ export default function CoffeeItem({ coffee, quantity }: CoffeeItemProps) {
       setQuantityCoffee((state) => state - 1);
     }
   }
+  function handleChangeItemQuantity() {}
   return (
     <Container>
       <img src={`/src/assets/${coffee.image}`} alt='Café Expresso' />
@@ -73,7 +74,11 @@ export default function CoffeeItem({ coffee, quantity }: CoffeeItemProps) {
               onAddItem={handleAddCoffee}
             />
           }
-          <Button kind='cart' icon={<ShoppingCartSimple weight='fill' />} />
+          <Button
+            onClick={handleChangeItemQuantity}
+            kind='cart'
+            icon={<ShoppingCartSimple weight='fill' />}
+          />
         </Actions>
       </Bottom>
     </Container>

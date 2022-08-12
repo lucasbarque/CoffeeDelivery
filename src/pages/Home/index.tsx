@@ -25,7 +25,28 @@ interface CoffeeType {
 }
 
 export function Home() {
-  const { coffees } = useCart();
+  const { cart, addCoffeeToCart } = useCart();
+  const [coffees, setCoffees] = useState<CoffeeType[]>([]);
+
+  useEffect(() => {
+    async function fetchCoffees() {
+      const response = await fetch('http://localhost:3000/coffes').then((res) =>
+        res.json()
+      );
+      setCoffees(response);
+    }
+    fetchCoffees();
+  }, []);
+
+  function getQuantity(coffeeId: number) {
+    const itemInCart = cart.find((c) => c.id === coffeeId);
+
+    if (itemInCart) {
+      return itemInCart.quantity;
+    } else {
+      return 1;
+    }
+  }
 
   return (
     <>
@@ -81,7 +102,11 @@ export function Home() {
 
         <CoffeeItems>
           {coffees.map((coffee) => (
-            <CoffeeItem key={coffee.id} coffee={coffee} quantity={10} />
+            <CoffeeItem
+              key={coffee.id}
+              coffee={coffee}
+              quantity={getQuantity(coffee.id)}
+            />
           ))}
         </CoffeeItems>
       </CoffeeList>

@@ -31,6 +31,7 @@ interface CoffeeItemProps {
 
 export default function CoffeeItem({ coffee, quantity }: CoffeeItemProps) {
   const [quantityCoffee, setQuantityCoffee] = useState(quantity);
+  const { changeCoffeeItemQuantity } = useCart();
 
   function handleAddCoffee() {
     setQuantityCoffee((state) => state + 1);
@@ -41,7 +42,18 @@ export default function CoffeeItem({ coffee, quantity }: CoffeeItemProps) {
       setQuantityCoffee((state) => state - 1);
     }
   }
-  function handleChangeItemQuantity() {}
+  function handleChangeItemQuantity() {
+    changeCoffeeItemQuantity(
+      {
+        id: coffee.id,
+        title: coffee.title,
+        price: coffee.price,
+        image: coffee.image,
+      },
+      quantityCoffee
+    );
+  }
+
   return (
     <Container>
       <img src={`/src/assets/${coffee.image}`} alt='Café Expresso' />

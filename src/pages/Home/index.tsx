@@ -25,7 +25,7 @@ interface CoffeeType {
 }
 
 export function Home() {
-  const { cart, addCoffeeToCart } = useCart();
+  const { cart } = useCart();
   const [coffees, setCoffees] = useState<CoffeeType[]>([]);
 
   useEffect(() => {
@@ -39,7 +39,7 @@ export function Home() {
   }, []);
 
   function getQuantity(coffeeId: number) {
-    const itemInCart = cart.find((c) => c.id === coffeeId);
+    const itemInCart = cart.find((c) => c.coffee.id === coffeeId);
 
     if (itemInCart) {
       return itemInCart.quantity;

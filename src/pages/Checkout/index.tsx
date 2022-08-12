@@ -1,5 +1,9 @@
+import { priceFormatter } from '../../utils/formatter';
+import { useCart } from '../../hooks/useCart';
+
 import {
   Bank,
+  Coffee,
   CreditCard,
   CurrencyDollar,
   MapPinLine,
@@ -8,6 +12,7 @@ import {
 } from 'phosphor-react';
 import Button from '../../components/Button';
 import Selector from '../../components/Selector';
+
 import {
   Container,
   Order,
@@ -27,10 +32,48 @@ import {
   Resume,
   Total,
   Actions,
-  ContainerButton
+  ContainerButton,
 } from './styles';
+import { useNavigate } from 'react-router-dom';
+
+interface Coffee {
+  id: number;
+  title: string;
+  price: number;
+  image: string;
+}
 
 export function Checkout() {
+  const { cart, changeCoffeeItemQuantity, removeItem, clearCart } = useCart();
+  const navigate = useNavigate();
+
+  function handleChangeItemQuantity(coffee: Coffee, quantity: number) {
+    if (quantity > 0) {
+      changeCoffeeItemQuantity(
+        {
+          id: coffee.id,
+          title: coffee.title,
+          price: coffee.price,
+          image: coffee.image,
+        },
+        quantity
+      );
+    }
+  }
+
+  function handleRemoveItem(coffeeId: number) {
+    removeItem(coffeeId);
+  }
+
+  function handleSubmitOrder() {
+    clearCart();
+    navigate('/success', { replace: true });
+  }
+
+  const total = cart.reduce((acc, item) => {
+    return acc + item.coffee.price * item.quantity;
+  }, 0);
+
   return (
     <Container>
       <Order>
@@ -102,38 +145,68 @@ export function Checkout() {
       <Cart>
         <Title>Cafés selecionados</Title>
         <Items>
-          <Item>
-            <Infos>
-              <img src="/src/assets/expresso.svg" width={64} />
-              <div>
-                <span>Expresso Tradicional</span>
-                {<Actions>
-                  <Selector />
-                  <Button kind="textIcon" icon={<Trash />}>Remover</Button>
-                </Actions>}
-              </div>
+          {cart.length > 0 &&
+            cart.map((item) => (
+              <Item key={item.coffee.id}>
+                <Infos>
+                  <img src={`/src/assets/${item.coffee.image}`} width={64} />
+                  <div>
+                    <span>{item.coffee.title}</span>
+                    {
+                      <Actions>
+                        <Selector
+                          onAddItem={() =>
+                            handleChangeItemQuantity(
+                              item.coffee,
+                              item.quantity + 1
+                            )
+                          }
+                          onRemoveItem={() =>
+                            handleChangeItemQuantity(
+                              item.coffee,
+                              item.quantity - 1
+                            )
+                          }
+                          quantity={item.quantity}
+                        />
+                        <Button
+                          kind='textIcon'
+                          icon={<Trash />}
+                          onClick={() => handleRemoveItem(item.coffee.id)}
+                        >
+                          Remover
+                        </Button>
+                      </Actions>
+                    }
+                  </div>
+                </Infos>
+                <Price>
+                  {priceFormatter.format(item.coffee.price * item.quantity)}
+                </Price>
+              </Item>
+            ))}
 
-            </Infos>
-            <Price>
-              R$ 9,90
-            </Price>
-          </Item>
-
-          <Resume>
-            <span>Total de Itens</span>
-            <span>R$ 29,70</span>
-          </Resume>
-          <Resume>
-            <span>Entrega</span>
-            <span>R$ 3,50</span>
-          </Resume>
-          <Total>
-            <span>Total</span>
-            <span>R$ 33,20</span>
-          </Total>
-          <ContainerButton>
-            <Button kind='text'>Confirmar pedido</Button>
-          </ContainerButton>
+          {cart.length > 0 ? (
+            <>
+              <Resume>
+                <span>Total de Itens</span>
+                <span>{priceFormatter.format(total)}</span>
+              </Resume>
+              <Resume>
+                <span>Entrega</span>
+                <span>R$ 3,50</span>
+              </Resume>
+              <Total>
+                <span>Total</span>
+                <span>{priceFormatter.format(total + 3.5)}</span>
+              </Total>
+              <ContainerButton onClick={handleSubmitOrder}>
+                <Button kind='text'>Confirmar pedido</Button>
+              </ContainerButton>
+            </>
+          ) : (
+            <span>Nenhum item selecionado</span>
+          )}
         </Items>
       </Cart>
     </Container>

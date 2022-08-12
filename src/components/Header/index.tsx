@@ -1,10 +1,12 @@
 import { MapPin, ShoppingCart } from 'phosphor-react';
 import { NavLink } from 'react-router-dom';
+import { useCart } from '../../hooks/useCart';
 import Button from '../Button';
 import Logo from '../Logo';
 import { Buttons, Container, Location } from './styles';
 
 export default function Header() {
+  const { cart } = useCart();
   return (
     <Container>
       <NavLink to='/'>
@@ -19,7 +21,7 @@ export default function Header() {
           <Button
             kind='cart-badge'
             icon={<ShoppingCart weight='fill' />}
-            labelQuantity={0}
+            labelQuantity={cart.length}
           />
         </NavLink>
       </Buttons>

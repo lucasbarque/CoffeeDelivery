@@ -56,7 +56,7 @@ export default function CoffeeItem({ coffee, quantity }: CoffeeItemProps) {
 
   return (
     <Container>
-      <img src={`/src/assets/${coffee.image}`} alt='Café Expresso' />
+      <img src={`/${coffee.image}`} alt='Café Expresso' />
 
       <CoffeeTypeList>
         {coffee.types &&

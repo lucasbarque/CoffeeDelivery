@@ -92,7 +92,7 @@ export function Home() {
           </div>
 
           <div>
-            <img src='/src/assets/coffee-image.png' alt='' />
+            <img src='/coffee-image.png' alt='' />
           </div>
         </BannerContent>
       </BannerContainer>

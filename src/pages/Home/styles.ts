@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 export const BannerContainer = styled.div`
-  background: url('/src/assets/bg-banner.jpg') no-repeat center center;
+  background: url('/bg-banner.jpg') no-repeat center center;
   background-size: cover;
 `;
 export const BannerContent = styled.div`

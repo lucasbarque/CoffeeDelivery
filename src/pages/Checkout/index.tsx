@@ -149,7 +149,7 @@ export function Checkout() {
             cart.map((item) => (
               <Item key={item.coffee.id}>
                 <Infos>
-                  <img src={`/src/assets/${item.coffee.image}`} width={64} />
+                  <img src={`/${item.coffee.image}`} width={64} />
                   <div>
                     <span>{item.coffee.title}</span>
                     {
